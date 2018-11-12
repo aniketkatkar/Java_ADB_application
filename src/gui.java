@@ -95,6 +95,7 @@ public class gui extends JFrame{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				check_adb();
+				ftue();
 			}
 		});
 		button.setBounds(50, 90, 147, 46);
@@ -107,6 +108,7 @@ public class gui extends JFrame{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				check_adb();
+				gift_machine();
 			}
 		});
 		button_1.setBounds(50, 166, 147, 46);
@@ -119,6 +121,7 @@ public class gui extends JFrame{
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				check_adb();
+				unlock_level_200();
 			}
 		});
 		button_2.setBounds(247, 90, 147, 46);
@@ -131,6 +134,7 @@ public class gui extends JFrame{
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				check_adb();
+				smoke();
 			}
 		});
 		button_3.setBounds(247, 166, 147, 46);
@@ -150,13 +154,16 @@ public class gui extends JFrame{
             return null;
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    															//Directions//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
   //move up
   	public void up() {
   		String up = "adb shell swipe 560 1525 540 880";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(up);
   	
   			pr.waitFor();
   	
@@ -174,7 +181,7 @@ public class gui extends JFrame{
   		String down = "adb shell swipe 540 880 560 1525";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(down);
   	
   			pr.waitFor();
   	
@@ -192,7 +199,7 @@ public class gui extends JFrame{
   		String right = "adb shell swipe 247 1220 907 1176";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(right);
   	
   			pr.waitFor();
   	
@@ -210,7 +217,7 @@ public class gui extends JFrame{
   		String left = "adb shell swipe 907 1176 247 1220";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(left);
   	
   			pr.waitFor();
   	
@@ -228,7 +235,7 @@ public class gui extends JFrame{
   		String touch = "adb shell tap 532 1260";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(touch);
   	
   			pr.waitFor();
   	
@@ -243,10 +250,10 @@ public class gui extends JFrame{
   	
   //key 1
   	public void key1() {
-  		String left = "adb shell swipe 907 1176 247 1220";
+  		String key1 = "adb shell swipe 907 1176 247 1220";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(key1);
   	
   			pr.waitFor();
   	
@@ -261,10 +268,10 @@ public class gui extends JFrame{
   	
   //key 2
   	public void key2() {
-  		String left = "adb shell swipe 907 1176 247 1220";
+  		String key2 = "adb shell swipe 907 1176 247 1220";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(key2);
   	
   			pr.waitFor();
   	
@@ -279,10 +286,10 @@ public class gui extends JFrame{
   	
   //key 3
   	public void key3() {
-  		String left = "adb shell swipe 907 1176 247 1220";
+  		String key3 = "adb shell swipe 907 1176 247 1220";
   		try {
   			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(cmd);
+  			Process pr = run.exec(key3);
   	
   			pr.waitFor();
   	
@@ -294,6 +301,25 @@ public class gui extends JFrame{
   			e.printStackTrace();
   		}
   	}
+  	
+  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  												//Main Functions//
+  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  	public void ftue() {
+  		
+  	}
+  	
+	public void gift_machine() {
+	  		
+	}
+	
+	public void unlock_level_200() {
+  		
+  	}
+
+	public void smoke() {
+		
+	}
 }
 
 

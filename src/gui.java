@@ -1,6 +1,9 @@
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
+import java.awt.Panel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,57 +13,122 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import menu.AboutDialog;
+
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import java.awt.Font;
+import java.awt.Frame;
 
 public class gui extends JFrame{
 
 	private JFrame frame;
 	String line;
 	
+	//dialog box
+	private Frame mainFrame;
+   private Label headerLabel;
+   private Label statusLabel;
+   private Panel controlPanel;
+	
 	public JMenuBar createMenuBar() {
         JMenuBar menuBar;
-        JMenu menu, submenu;
-        JMenuItem menuItem;
+        JMenu menu;
+        JMenuItem menuItem, menuItem1;
         //Create the menu bar.
         menuBar = new JMenuBar();
  
-        //Build the first menu.
+        //File menu
         menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_A);
         menu.getAccessibleContext().setAccessibleDescription(
                 "The only menu in this program that has menu items");
         menuBar.add(menu);
  
-        //a group of JMenuItems
-        menuItem = new JMenuItem("A text-only menu item",
+        //quit sub
+        menuItem = new JMenuItem("Quit",
                                  KeyEvent.VK_T);
-        //menuItem.setMnemonic(KeyEvent.VK_T); //used constructor instead
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_1, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription(
                 "This doesn't really do anything");
-        //menuItem.addActionListener(this);
         menu.add(menuItem);
  
-        //Build second menu in the menu bar.
+        //Help menu
         menu = new JMenu("Help");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription(
                 "This menu does nothing");
         menuBar.add(menu);
+        
+        //help sub
+        menuItem1 = new JMenuItem("About",
+                                 KeyEvent.VK_T);
+        menuItem1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		AboutDialog aboutDialog = new AboutDialog(mainFrame);
+	            aboutDialog.setVisible(true);
+        	}
+        });
+        menuItem1.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        menu.add(menuItem1);
  
         return menuBar;
     }
+	
+	//show dialog box
+	private void showDialogDemo(){
+	      
+	      //controlPanel.add(showAboutDialogButton);
+	      frame.setVisible(true);  
+	   }
+	
+	//About dialog box
+	class AboutDialog extends Dialog {
+	      public AboutDialog(Frame parent){
+	         super(parent, true);         
+	         setBackground(Color.gray);
+	         setLayout(new BorderLayout());
+	         Panel panel = new Panel();
+	         panel.add(new Button("Close"));
+	         add("South", panel);
+	         setSize(500,200);
+
+	         addWindowListener(new WindowAdapter() {
+	            public void windowClosing(WindowEvent windowEvent){
+	               dispose();
+	            }
+	         });
+	      }
+
+	      public boolean action(Event evt, Object arg){
+	         if(arg.equals("Close")){
+	            dispose();
+	            return true;
+	         }
+	         return false;
+	      }
+
+	      public void paint(Graphics g){
+	         g.setColor(Color.white);
+	         g.drawString("Just Dance Automation Kit v1.0", 170,70 );
+	         g.drawString("This is created for Just Dance to", 60, 110); 
+	         g.drawString("automate stuff you are tired of doing, doing, doing! ;)", 60, 130);      
+	         g.drawString("For suggestions and ideas, please contact me at aniket.katkar@ubisoft.com ", 60,150);
+	      }
+	   }
 	
 	//adb detection method
 		public void check_adb() {
@@ -90,11 +158,13 @@ public class gui extends JFrame{
 				try {
 					gui window = new gui();
 					window.frame.setVisible(true);
+					window.showDialogDemo();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	    
 	}
 
 	/**
@@ -117,6 +187,22 @@ public class gui extends JFrame{
 		
 		//gui demo = new gui();
 		frame.setJMenuBar(createMenuBar());
+		
+		//dialogbox
+		headerLabel = new Label();
+	      headerLabel.setAlignment(Label.CENTER);
+	      //statusLabel = new Label();        
+	      //statusLabel.setEnabled(false);
+	      //statusLabel.setAlignment(Label.CENTER);
+	      //statusLabel.setSize(350,100);
+
+	      controlPanel = new Panel();
+	      controlPanel.setLayout(new FlowLayout());
+
+	      frame.getContentPane().add(headerLabel);
+	      frame.getContentPane().add(controlPanel);
+	      //frame.getContentPane().add(statusLabel);
+	      frame.setVisible(true);  
 
 		//Just Dance Label
 		JLabel lblNewLabel = new JLabel("JUST DANCE");

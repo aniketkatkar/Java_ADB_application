@@ -5,11 +5,16 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 import java.io.BufferedReader;
@@ -21,6 +26,41 @@ public class gui extends JFrame{
 
 	private JFrame frame;
 	String line;
+	
+	public JMenuBar createMenuBar() {
+        JMenuBar menuBar;
+        JMenu menu, submenu;
+        JMenuItem menuItem;
+        //Create the menu bar.
+        menuBar = new JMenuBar();
+ 
+        //Build the first menu.
+        menu = new JMenu("File");
+        menu.setMnemonic(KeyEvent.VK_A);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "The only menu in this program that has menu items");
+        menuBar.add(menu);
+ 
+        //a group of JMenuItems
+        menuItem = new JMenuItem("A text-only menu item",
+                                 KeyEvent.VK_T);
+        //menuItem.setMnemonic(KeyEvent.VK_T); //used constructor instead
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "This doesn't really do anything");
+        //menuItem.addActionListener(this);
+        menu.add(menuItem);
+ 
+        //Build second menu in the menu bar.
+        menu = new JMenu("Help");
+        menu.setMnemonic(KeyEvent.VK_N);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+        menuBar.add(menu);
+ 
+        return menuBar;
+    }
 	
 	//adb detection method
 		public void check_adb() {
@@ -74,11 +114,14 @@ public class gui extends JFrame{
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		//gui demo = new gui();
+		frame.setJMenuBar(createMenuBar());
 
 		//Just Dance Label
-		JLabel lblNewLabel = new JLabel("JUST DANCE 2019");
+		JLabel lblNewLabel = new JLabel("JUST DANCE");
 		lblNewLabel.setFont(new Font("Monotype Corsiva", Font.BOLD | Font.ITALIC, 23));
-		lblNewLabel.setBounds(123, 11, 193, 36);
+		lblNewLabel.setBounds(154, 21, 142, 36);
 		frame.getContentPane().add(lblNewLabel);
 		
 		//verifying adb label

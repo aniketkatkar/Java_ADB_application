@@ -33,126 +33,124 @@ import java.io.InputStreamReader;
 import java.awt.Font;
 import java.awt.Frame;
 
-public class gui extends JFrame{
+public class gui extends JFrame {
 
 	private JFrame frame;
 	String line;
-	
-	//dialog box
-	private Frame mainFrame;
-   private Label headerLabel;
-   private Label statusLabel;
-   private Panel controlPanel;
-	
+
+	private Label headerLabel;
+	private Panel controlPanel;
+
 	public JMenuBar createMenuBar() {
-        JMenuBar menuBar;
-        JMenu menu;
-        JMenuItem menuItem, menuItem1;
-        //Create the menu bar.
-        menuBar = new JMenuBar();
- 
-        //File menu
-        menu = new JMenu("File");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "The only menu in this program that has menu items");
-        menuBar.add(menu);
- 
-        //quit sub
-        menuItem = new JMenuItem("Quit",
-                                 KeyEvent.VK_T);
-        menuItem.getAccessibleContext().setAccessibleDescription(
-                "This doesn't really do anything");
-        menu.add(menuItem);
- 
-        //Help menu
-        menu = new JMenu("Help");
-        menu.setMnemonic(KeyEvent.VK_N);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
-        menuBar.add(menu);
-        
-        //help sub
-        menuItem1 = new JMenuItem("About",
-                                 KeyEvent.VK_T);
-        menuItem1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		AboutDialog aboutDialog = new AboutDialog(mainFrame);
-	            aboutDialog.setVisible(true);
-        	}
-        });
-        menuItem1.getAccessibleContext().setAccessibleDescription(
-                "This doesn't really do anything");
-        menu.add(menuItem1);
- 
-        return menuBar;
-    }
-	
-	//show dialog box
-	private void showDialogDemo(){
-	      
-	      //controlPanel.add(showAboutDialogButton);
-	      frame.setVisible(true);  
-	   }
-	
-	//About dialog box
+		JMenuBar menuBar;
+		JMenu menu;
+		JMenuItem menuItem, menuItem1;
+		// Create the menu bar.
+		menuBar = new JMenuBar();
+
+		// File menu
+		menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_A);
+		menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
+		menuBar.add(menu);
+
+		// quit sub
+		menuItem = new JMenuItem("Quit", KeyEvent.VK_T);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		menu.add(menuItem);
+
+		// Help menu
+		menu = new JMenu("Help");
+		menu.setMnemonic(KeyEvent.VK_N);
+		menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
+		menuBar.add(menu);
+
+		// help sub
+		menuItem1 = new JMenuItem("About", KeyEvent.VK_T);
+		menuItem1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AboutDialog aboutDialog = new AboutDialog(frame);
+				aboutDialog.setVisible(true);
+			}
+		});
+		menuItem1.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		menu.add(menuItem1);
+
+		return menuBar;
+	}
+
+	// show dialog box
+	private void showDialogDemo() {
+
+		// controlPanel.add(showAboutDialogButton);
+		frame.setVisible(true);
+	}
+
+	// About dialog box
 	class AboutDialog extends Dialog {
-	      public AboutDialog(Frame parent){
-	         super(parent, true);         
-	         setBackground(Color.gray);
-	         setLayout(new BorderLayout());
-	         Panel panel = new Panel();
-	         panel.add(new Button("Close"));
-	         add("South", panel);
-	         setSize(500,200);
+		public AboutDialog(Frame parent) {
+			super(parent, true);
+			setBackground(Color.gray);
+			setLayout(new BorderLayout());
+			Panel panel = new Panel();
+			panel.add(new Button("Close"));
+			add("South", panel);
+			// setSize(500,200);
+			setBounds(500, 300, 500, 200);
+			setTitle("About");
 
-	         addWindowListener(new WindowAdapter() {
-	            public void windowClosing(WindowEvent windowEvent){
-	               dispose();
-	            }
-	         });
-	      }
+			addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent windowEvent) {
+					dispose();
+				}
+			});
+		}
 
-	      public boolean action(Event evt, Object arg){
-	         if(arg.equals("Close")){
-	            dispose();
-	            return true;
-	         }
-	         return false;
-	      }
+		public boolean action(Event evt, Object arg) {
+			if (arg.equals("Close")) {
+				dispose();
+				return true;
+			}
+			return false;
+		}
 
-	      public void paint(Graphics g){
-	         g.setColor(Color.white);
-	         g.drawString("Just Dance Automation Kit v1.0", 170,70 );
-	         g.drawString("This is created for Just Dance to", 60, 110); 
-	         g.drawString("automate stuff you are tired of doing, doing, doing! ;)", 60, 130);      
-	         g.drawString("For suggestions and ideas, please contact me at aniket.katkar@ubisoft.com ", 60,150);
-	      }
-	   }
-	
-	//adb detection method
-		public void check_adb() {
-			String cmd = "adb devices";
-			try {
-				Runtime run = Runtime.getRuntime();
-				Process pr = run.exec(cmd);
-		
-				pr.waitFor();
-		
-				BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-				while ((line=buf.readLine())!=null) {
+		public void paint(Graphics g) {
+			g.setColor(Color.white);
+			g.drawString("Just Dance Automation Kit v1.0", 170, 70);
+			g.drawString("This is created for Just Dance to automate stuff", 40, 110);
+			g.drawString("you are tired of doing, doing, doing! ;)", 40, 130);
+			g.drawString("For suggestions and ideas, please contact me at aniket.katkar@ubisoft.com ", 40, 150);
+		}
+	}
+
+	// adb detection method
+	public void check_adb() {
+		String cmd = "adb devices";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(cmd);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
 				System.out.println(line);
 			}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	
+	}
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -164,7 +162,7 @@ public class gui extends JFrame{
 				}
 			}
 		});
-	    
+
 	}
 
 	/**
@@ -181,275 +179,884 @@ public class gui extends JFrame{
 		frame = new JFrame("Just Dance Testing Kit");
 		frame.setIconImage(getFDImage());
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(500, 300, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//gui demo = new gui();
+
+		// gui demo = new gui();
 		frame.setJMenuBar(createMenuBar());
-		
-		//dialogbox
+
+		// dialogbox
 		headerLabel = new Label();
-	      headerLabel.setAlignment(Label.CENTER);
-	      //statusLabel = new Label();        
-	      //statusLabel.setEnabled(false);
-	      //statusLabel.setAlignment(Label.CENTER);
-	      //statusLabel.setSize(350,100);
+		headerLabel.setAlignment(Label.CENTER);
 
-	      controlPanel = new Panel();
-	      controlPanel.setLayout(new FlowLayout());
+		controlPanel = new Panel();
+		controlPanel.setLayout(new FlowLayout());
 
-	      frame.getContentPane().add(headerLabel);
-	      frame.getContentPane().add(controlPanel);
-	      //frame.getContentPane().add(statusLabel);
-	      frame.setVisible(true);  
+		frame.getContentPane().add(headerLabel);
+		frame.getContentPane().add(controlPanel);
+		frame.setVisible(true);
 
-		//Just Dance Label
+		// Just Dance Label
 		JLabel lblNewLabel = new JLabel("JUST DANCE");
 		lblNewLabel.setFont(new Font("Monotype Corsiva", Font.BOLD | Font.ITALIC, 23));
 		lblNewLabel.setBounds(154, 21, 142, 36);
 		frame.getContentPane().add(lblNewLabel);
-		
-		//verifying adb label
+
+		// verifying adb label
 		JLabel verify_adb = new JLabel("");
 		verify_adb.setForeground(new Color(0, 102, 0));
 		verify_adb.setBounds(188, 58, 77, 14);
 		verify_adb.setText(line);
 		frame.getContentPane().add(verify_adb);
-		
-		//FTUE
+
+		// FTUE
 		Button button = new Button("Complete FTUE");
 		button.setBackground(new Color(153, 204, 255));
 		button.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				check_adb();
-				ftue();
+				Thread t1 = new Thread (new Runnable() {
+					
+					@Override
+					public void run() {
+						check_adb();
+						ftue();
+					}
+				});
+			t1.start();
 			}
 		});
 		button.setBounds(50, 90, 147, 46);
 		frame.getContentPane().add(button);
-		
-		//Gift Machine
+
+		// Gift Machine
 		Button button_1 = new Button("Unlock Level 200");
 		button_1.setBackground(new Color(153, 204, 255));
 		button_1.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				check_adb();
-				gift_machine();
+				Thread t1 = new Thread (new Runnable() {
+					
+					@Override
+					public void run() {
+						//check_adb();
+						System.out.print("came here");
+						unlock_level_200();
+					}
+				});
+			t1.start();
 			}
 		});
 		button_1.setBounds(50, 166, 147, 46);
 		frame.getContentPane().add(button_1);
-		
-		//Level 200
+
+		// Level 200
 		Button button_2 = new Button("Unlock Gift Machine");
 		button_2.setBackground(new Color(153, 204, 255));
 		button_2.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				check_adb();
-				unlock_level_200();
+				Thread t1 = new Thread (new Runnable() {
+					
+					@Override
+					public void run() {
+						check_adb();
+						gift_machine();
+					}
+				});
+			t1.start();
 			}
 		});
 		button_2.setBounds(247, 90, 147, 46);
 		frame.getContentPane().add(button_2);
-		
-		//Smoke
+
+		// Smoke
 		Button button_3 = new Button("Smoke Test");
 		button_3.setBackground(new Color(153, 204, 255));
 		button_3.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				check_adb();
-				smoke();
+				Thread t1 = new Thread (new Runnable() {
+					
+					@Override
+					public void run() {
+						check_adb();
+						smoke();
+					}
+				});
+			t1.start();
 			}
 		});
 		button_3.setBounds(247, 166, 147, 46);
 		frame.getContentPane().add(button_3);
-		
+
 		check_adb();
 	}
-	
-	
 
-    //Returns an Image or null.
-    protected static Image getFDImage() {
-        java.net.URL imgURL = gui.class.getResource("logo.png");
-        if (imgURL != null) {
-            return new ImageIcon(imgURL).getImage();
-        } else {
-            return null;
-        }
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    															//Directions//
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-  //move up
-  	public void up() {
-  		String up = "adb shell swipe 560 1525 540 880";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(up);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //move down
-  	public void down() {
-  		String down = "adb shell swipe 540 880 560 1525";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(down);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //move right
-  	public void right() {
-  		String right = "adb shell swipe 247 1220 907 1176";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(right);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //move left
-  	public void left() {
-  		String left = "adb shell swipe 907 1176 247 1220";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(left);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  // touch
-  	public void up() {
-  		String touch = "adb shell tap 532 1260";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(touch);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //key 1
-  	public void key1() {
-  		String key1 = "adb shell swipe 907 1176 247 1220";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(key1);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //key 2
-  	public void key2() {
-  		String key2 = "adb shell swipe 907 1176 247 1220";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(key2);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  //key 3
-  	public void key3() {
-  		String key3 = "adb shell swipe 907 1176 247 1220";
-  		try {
-  			Runtime run = Runtime.getRuntime();
-  			Process pr = run.exec(key3);
-  	
-  			pr.waitFor();
-  	
-  			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-  			while ((line=buf.readLine())!=null) {
-  			System.out.println(line);
-  		}
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		}
-  	}
-  	
-  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  												//Main Functions//
-  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  	public void ftue() {
-  		
-  	}
-  	
-	public void gift_machine() {
-	  		
+	// Returns an Image or null.
+	protected static Image getFDImage() {
+		java.net.URL imgURL = gui.class.getResource("logo.png");
+		if (imgURL != null) {
+			return new ImageIcon(imgURL).getImage();
+		} else {
+			return null;
+		}
 	}
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Directions//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// move up
+	public void up() {
+		String up = "adb shell input swipe 560 1525 540 880";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(up);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// move down
+	public void down() {
+		String down = "adb shell input swipe 540 880 560 1525";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(down);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// move right
+	public void right() {
+		String right = "adb shell input swipe 247 1220 907 1176";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(right);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// move left
+	public void left() {
+		String left = "adb shell input swipe 907 1176 247 1220";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(left);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// touch
+	public void touch() {
+		String touch = "adb shell input tap 532 1260";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(touch);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key 1
+	public void key1() {
+		String key1 = "adb shell input swipe 907 1176 247 1220";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key1);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key 2
+	public void key2() {
+		String key2 = "adb shell input tap 544 333";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key2);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key 3
+	public void key3() {
+		String key3 = "adb shell input swipe 907 1176 247 1220";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key for q
+	public void q() {
+		String key3 = "adb shell input tap 45 1290";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key for p
+	public void p() {
+		String key3 = "adb shell input tap 1015 1280";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key for okay 1
+	public void okay1() {
+		String key3 = "adb shell input tap 1015 820";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// key for ok 2
+	public void okay2() {
+		String key3 = "adb shell input tap 920 965";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep1
+	public void sleep1() {
+		String key3 = "adb shell sleep 1";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep2
+	public void sleep2() {
+		String key3 = "adb shell sleep 2";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep3
+	public void sleep3() {
+		String key3 = "adb shell sleep 3";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep4
+	public void sleep4() {
+		String key3 = "adb shell sleep 4";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep5
+	public void sleep5() {
+		String key3 = "adb shell sleep 5";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep6
+	public void sleep6() {
+		String key3 = "adb shell sleep 6";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep7
+	public void sleep7() {
+		String key3 = "adb shell sleep 7";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep8
+	public void sleep8() {
+		String key3 = "adb shell sleep 8";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep9
+	public void sleep9() {
+		String key3 = "adb shell sleep 9";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep10
+	public void sleep10() {
+		String key3 = "adb shell sleep 10";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// sleep120
+	public void sleep120() {
+		String key3 = "adb shell sleep 120";
+		try {
+			Runtime run = Runtime.getRuntime();
+			Process pr = run.exec(key3);
+
+			pr.waitFor();
+
+			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			while ((line = buf.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Main Functions//
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public void ftue() {
+		// tap to continue
+		// touch();
+		// sleep1();
+
+		// avatar selection page
+		// right();
+		// right();
+		// touch();
+		// sleep1();
+
+		// flag
+		// touch();
+		// sleep7();
+
+		// mode selection page
+		touch();
+		sleep8();
+		// tutorial
+		touch();
+		sleep6();
+
+		// onboarding 1
+		touch();
+		sleep1();
+
+		// songstab
+		right();
+		right();
+		right();
+		down();
+		sleep1();
+
+		// dance to poco loco (1st time)
+		touch();
+		sleep4();
+
+		// continue
+		touch();
+		sleep4();
+
+		// dance
+		touch();
+		sleep10();
+		sleep5();
+
+		// tutorial (got it)
+		touch();
+		sleep120();
+		sleep10();
+		sleep10();
+
+		// score recap
+		touch();
+		sleep8();
+
+		// gender skip
+		key2();
+		sleep4();
+
+		// age skip
+		key2();
+		sleep4();
+
+		// nickname
+		touch();
+		sleep4();
+
+		// name giving q
+		q();
+		sleep1();
+
+		// name giving p
+		//p();
+
+		// okay1
+		okay1();
+		sleep1();
+
+		// okay2
+		okay2();
+		sleep1();
+
+		// avatar
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+
+		// title
+		touch();
+		sleep3();
+		touch();
+		sleep5();
+
+		// save n quit
+		touch();
+		sleep7();
+
+		// second dnace poco loco
+
+		// dance poco loco
+		touch();
+		sleep5();
+
+		// dance
+		touch();
+		sleep120();
+		sleep10();
+		sleep10();
+		
+
+		// score recap
+		touch();
+		sleep8();
+
+		// continue (my mojo)
+		touch();
+		sleep10();
+		sleep4();
+
+		// continue (my level)
+		touch();
+		sleep4();
+
+		// continue (my challenges)
+		touch();
+		sleep5();
+
+		// gift machine
+		touch();
+		sleep10();
+
+		// continue (gift received)
+		touch();
+		sleep2();
+
+		// continue (gift mahine again)
+		touch();
+		sleep5();
+
+		// autodance
+		touch();
+		sleep9();
+
+		// onboarading2
+		touch();
+		sleep4();
+
+		// songstab
+		left();
+		left();
+		left();
+		left();
+		left();
+
+		// songstab to search
+		down();
+
+		// search to songstab
+		up();
+
+		// in songstab
+		right();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		right();
+		sleep3();
+
+		// launch poco loco (3rd time)
+
+		// dance
+		touch();
+		sleep6();
+
+		// dance
+		touch();
+		sleep120();
+		sleep10();
+		sleep10();
+
+		// score recap
+		touch();
+		sleep10();
+		sleep2();
+
+		// my challenges
+		touch();
+		sleep5();
+
+		// auto dance
+		touch();
+		sleep8();
+
+		// songstab
+		left();
+
+		// goto search
+		down();
+
+		// go to songstab
+		up();
+
+		// in songstab
+		right();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		right();
+		sleep3();
+
+		// launch poco loco (4th time)
+
+		// dance
+		touch();
+		sleep5();
+
+		// dance
+		touch();
+		sleep120();
+		sleep10();
+		sleep10();
+
+		// score recap
+		touch();
+		sleep10();
+		sleep2();
+
+		// my challenges
+		touch();
+		sleep3();
+		
+		//gift machine
+		right();
+		touch();
+		sleep5();
+
+		// autodance
+		touch();
+		sleep9();
+
+		// onboarding
+		touch();
+		sleep1();
+
+		// home tan
+		left();
+
+		// go to songstab
+		down();
+		down();
+
+		// in songstab
+		right();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		down();
+		right();
+		sleep3();
+
+		// launch poco loco (5th time)
+
+		// dance
+		touch();
+		sleep5();
+
+		// dance
+		touch();
+		sleep120();
+		sleep10();
+		sleep10();
+
+		// score recap
+		touch();
+		sleep10();
+		sleep5();
+
+		// my challenges
+		touch();
+		sleep5();
+
+		// autodance
+		touch();
+		sleep8();
+
+		// onboarding
+		touch();
+		sleep2();
+	}
+
+	public void gift_machine() {
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+		touch();
+		sleep5();
+	}
+
 	public void unlock_level_200() {
-  		
-  	}
+
+	}
 
 	public void smoke() {
-		
+
 	}
 }
-
 
 //make methods for swipe up, swipe down touch and tap. simple af

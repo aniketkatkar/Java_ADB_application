@@ -795,6 +795,17 @@ public class gui extends JFrame {
 		// name giving q
 		q();
 		sleep1();
+		
+		
+		
+		
+		//change cordinated for q and okay buttons
+		
+		
+		
+		
+		
+		
 
 		// name giving p
 		//p();

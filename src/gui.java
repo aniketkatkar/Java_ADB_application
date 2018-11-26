@@ -277,8 +277,8 @@ public class gui extends JFrame {
 		button_2.setBounds(239, 90, 155, 46);
 		frmJustDanceAutomatipon.getContentPane().add(button_2);
 
-		// Smoke
-		Button button_3 = new Button("Smoke Test");
+		// Stop
+		Button button_3 = new Button("Stop Test");
 		button_3.setBackground(new Color(153, 204, 255));
 		button_3.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_3.addActionListener(new ActionListener() {

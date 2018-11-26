@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 import menu.AboutDialog;
@@ -32,14 +33,17 @@ import java.io.InputStreamReader;
 
 import java.awt.Font;
 import java.awt.Frame;
+import javax.swing.SwingConstants;
 
 public class gui extends JFrame {
 
-	private JFrame frame;
+	private JFrame frmJustDanceAutomatipon;
 	String line;
 
 	private Label headerLabel;
 	private Panel controlPanel;
+	JTextArea textAreaoutput;
+	String nl = "\n";
 
 	public JMenuBar createMenuBar() {
 		JMenuBar menuBar;
@@ -74,7 +78,7 @@ public class gui extends JFrame {
 		menuItem1 = new JMenuItem("About", KeyEvent.VK_T);
 		menuItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AboutDialog aboutDialog = new AboutDialog(frame);
+				AboutDialog aboutDialog = new AboutDialog(frmJustDanceAutomatipon);
 				aboutDialog.setVisible(true);
 			}
 		});
@@ -88,7 +92,7 @@ public class gui extends JFrame {
 	private void showDialogDemo() {
 
 		// controlPanel.add(showAboutDialogButton);
-		frame.setVisible(true);
+		frmJustDanceAutomatipon.setVisible(true);
 	}
 
 	// About dialog box
@@ -155,7 +159,7 @@ public class gui extends JFrame {
 			public void run() {
 				try {
 					gui window = new gui();
-					window.frame.setVisible(true);
+					window.frmJustDanceAutomatipon.setVisible(true);
 					window.showDialogDemo();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -176,15 +180,16 @@ public class gui extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Just Dance Testing Kit");
-		frame.setIconImage(getFDImage());
-		frame.setResizable(false);
-		frame.setBounds(500, 300, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmJustDanceAutomatipon = new JFrame("Just Dance Testing Kit");
+		frmJustDanceAutomatipon.setTitle("JDMCA Automation Kit - Nascent ");
+		frmJustDanceAutomatipon.setIconImage(getFDImage());
+		frmJustDanceAutomatipon.setResizable(false);
+		frmJustDanceAutomatipon.setBounds(500, 300, 450, 400);
+		frmJustDanceAutomatipon.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmJustDanceAutomatipon.getContentPane().setLayout(null);
 
 		// gui demo = new gui();
-		frame.setJMenuBar(createMenuBar());
+		frmJustDanceAutomatipon.setJMenuBar(createMenuBar());
 
 		// dialogbox
 		headerLabel = new Label();
@@ -193,22 +198,23 @@ public class gui extends JFrame {
 		controlPanel = new Panel();
 		controlPanel.setLayout(new FlowLayout());
 
-		frame.getContentPane().add(headerLabel);
-		frame.getContentPane().add(controlPanel);
-		frame.setVisible(true);
+		frmJustDanceAutomatipon.getContentPane().add(headerLabel);
+		frmJustDanceAutomatipon.getContentPane().add(controlPanel);
+		frmJustDanceAutomatipon.setVisible(true);
 
 		// Just Dance Label
 		JLabel lblNewLabel = new JLabel("JUST DANCE");
-		lblNewLabel.setFont(new Font("Monotype Corsiva", Font.BOLD | Font.ITALIC, 23));
-		lblNewLabel.setBounds(154, 21, 142, 36);
-		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("UbisoftTitleTwo Bold", Font.BOLD | Font.ITALIC, 23));
+		lblNewLabel.setBounds(126, 23, 191, 36);
+		frmJustDanceAutomatipon.getContentPane().add(lblNewLabel);
 
 		// verifying adb label
 		JLabel verify_adb = new JLabel("");
 		verify_adb.setForeground(new Color(0, 102, 0));
 		verify_adb.setBounds(188, 58, 77, 14);
 		verify_adb.setText(line);
-		frame.getContentPane().add(verify_adb);
+		frmJustDanceAutomatipon.getContentPane().add(verify_adb);
 
 		// FTUE
 		Button button = new Button("Complete FTUE");
@@ -216,19 +222,19 @@ public class gui extends JFrame {
 		button.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread t1 = new Thread (new Runnable() {
-					
+				Thread t1 = new Thread(new Runnable() {
+
 					@Override
 					public void run() {
 						check_adb();
 						ftue();
 					}
 				});
-			t1.start();
+				t1.start();
 			}
 		});
-		button.setBounds(50, 90, 147, 46);
-		frame.getContentPane().add(button);
+		button.setBounds(50, 90, 155, 46);
+		frmJustDanceAutomatipon.getContentPane().add(button);
 
 		// Gift Machine
 		Button button_1 = new Button("Unlock Level 200");
@@ -236,20 +242,20 @@ public class gui extends JFrame {
 		button_1.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread t1 = new Thread (new Runnable() {
-					
+				Thread t1 = new Thread(new Runnable() {
+
 					@Override
 					public void run() {
-						//check_adb();
+						// check_adb();
 						System.out.print("came here");
 						unlock_level_200();
 					}
 				});
-			t1.start();
+				t1.start();
 			}
 		});
-		button_1.setBounds(50, 166, 147, 46);
-		frame.getContentPane().add(button_1);
+		button_1.setBounds(50, 166, 155, 46);
+		frmJustDanceAutomatipon.getContentPane().add(button_1);
 
 		// Level 200
 		Button button_2 = new Button("Unlock Gift Machine");
@@ -257,19 +263,19 @@ public class gui extends JFrame {
 		button_2.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread t1 = new Thread (new Runnable() {
-					
+				Thread t1 = new Thread(new Runnable() {
+
 					@Override
 					public void run() {
 						check_adb();
 						gift_machine();
 					}
 				});
-			t1.start();
+				t1.start();
 			}
 		});
-		button_2.setBounds(247, 90, 147, 46);
-		frame.getContentPane().add(button_2);
+		button_2.setBounds(239, 90, 155, 46);
+		frmJustDanceAutomatipon.getContentPane().add(button_2);
 
 		// Smoke
 		Button button_3 = new Button("Smoke Test");
@@ -277,21 +283,27 @@ public class gui extends JFrame {
 		button_3.setFont(new Font("Alien Encounters", Font.BOLD, 14));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread t1 = new Thread (new Runnable() {
-					
+				Thread t1 = new Thread(new Runnable() {
+
 					@Override
 					public void run() {
-						check_adb();
-						smoke();
+						// check_adb();
+						stop();
 					}
 				});
-			t1.start();
+				t1.start();
 			}
 		});
-		button_3.setBounds(247, 166, 147, 46);
-		frame.getContentPane().add(button_3);
+		button_3.setBounds(239, 166, 155, 46);
+		frmJustDanceAutomatipon.getContentPane().add(button_3);
 
 		check_adb();
+
+		textAreaoutput = new JTextArea();
+		textAreaoutput.setEditable(false);
+		textAreaoutput.setBounds(51, 243, 343, 96);
+		textAreaoutput.setAutoscrolls(true);
+		frmJustDanceAutomatipon.getContentPane().add(textAreaoutput);
 	}
 
 	// Returns an Image or null.
@@ -740,6 +752,7 @@ public class gui extends JFrame {
 		// sleep7();
 
 		// mode selection page
+		textAreaoutput.setText("FTUE started");
 		touch();
 		sleep8();
 		// tutorial
@@ -752,12 +765,15 @@ public class gui extends JFrame {
 
 		// songstab
 		right();
+		sleep1();
 		right();
+		sleep1();
 		right();
+		sleep1();
 		down();
 		sleep1();
 
-		// dance to poco loco (1st time)
+		// printf( \n"dance to poco loco (1st time)");
 		touch();
 		sleep4();
 
@@ -775,17 +791,25 @@ public class gui extends JFrame {
 		sleep120();
 		sleep10();
 		sleep10();
+		textAreaoutput.setText("First song ended.");
 
 		// score recap
 		touch();
 		sleep8();
+		sleep2();
 
 		// gender skip
-		key2();
+		right();
+		sleep1();
+		touch();
+		// key2();
 		sleep4();
 
 		// age skip
-		key2();
+		right();
+		sleep1();
+		touch();
+		// key2();
 		sleep4();
 
 		// nickname
@@ -795,20 +819,6 @@ public class gui extends JFrame {
 		// name giving q
 		q();
 		sleep1();
-		
-		
-		
-		
-		//change cordinated for q and okay buttons
-		
-		
-		
-		
-		
-		
-
-		// name giving p
-		//p();
 
 		// okay1
 		okay1();
@@ -833,6 +843,8 @@ public class gui extends JFrame {
 		// save n quit
 		touch();
 		sleep7();
+		sleep2();
+		textAreaoutput.setText("Dancer card created.");
 
 		// second dnace poco loco
 
@@ -845,11 +857,12 @@ public class gui extends JFrame {
 		sleep120();
 		sleep10();
 		sleep10();
-		
+		textAreaoutput.setText("Second song ended.");
 
 		// score recap
 		touch();
 		sleep8();
+		sleep2();
 
 		// continue (my mojo)
 		touch();
@@ -870,11 +883,12 @@ public class gui extends JFrame {
 
 		// continue (gift received)
 		touch();
-		sleep2();
+		sleep4();
 
 		// continue (gift mahine again)
 		touch();
 		sleep5();
+		sleep4();
 
 		// autodance
 		touch();
@@ -886,29 +900,46 @@ public class gui extends JFrame {
 
 		// songstab
 		left();
+		sleep1();
 		left();
+		sleep1();
 		left();
+		sleep1();
 		left();
+		sleep1();
 		left();
+		sleep1();
 
 		// songstab to search
 		down();
+		sleep1();
 
 		// search to songstab
 		up();
+		sleep1();
 
 		// in songstab
 		right();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
-		right();
+		// sleep1();
+		// right();
 		sleep3();
 
 		// launch poco loco (3rd time)
@@ -922,10 +953,12 @@ public class gui extends JFrame {
 		sleep120();
 		sleep10();
 		sleep10();
+		textAreaoutput.setText("Third song ended");
 
 		// score recap
 		touch();
 		sleep10();
+		sleep2();
 		sleep2();
 
 		// my challenges
@@ -938,25 +971,38 @@ public class gui extends JFrame {
 
 		// songstab
 		left();
+		sleep1();
 
 		// goto search
 		down();
+		sleep1();
 
 		// go to songstab
 		up();
+		sleep1();
 
 		// in songstab
 		right();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
-		right();
+		// sleep1();
+		// right();
 		sleep3();
 
 		// launch poco loco (4th time)
@@ -970,18 +1016,21 @@ public class gui extends JFrame {
 		sleep120();
 		sleep10();
 		sleep10();
+		textAreaoutput.setText("Fourth song ended.");
 
 		// score recap
 		touch();
+		sleep10();
 		sleep10();
 		sleep2();
 
 		// my challenges
 		touch();
-		sleep3();
-		
-		//gift machine
+		sleep10();
+
+		// gift machine
 		right();
+		sleep2();
 		touch();
 		sleep5();
 
@@ -995,23 +1044,36 @@ public class gui extends JFrame {
 
 		// home tan
 		left();
+		sleep1();
 
 		// go to songstab
 		down();
+		sleep1();
 		down();
+		sleep1();
 
 		// in songstab
 		right();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
+		sleep1();
 		down();
-		right();
+		// sleep1();
+		// right();
 		sleep3();
 
 		// launch poco loco (5th time)
@@ -1025,11 +1087,13 @@ public class gui extends JFrame {
 		sleep120();
 		sleep10();
 		sleep10();
+		textAreaoutput.setText("Fifth song ended.");
 
 		// score recap
 		touch();
 		sleep10();
-		sleep5();
+		sleep10();
+		sleep2();
 
 		// my challenges
 		touch();
@@ -1042,31 +1106,29 @@ public class gui extends JFrame {
 		// onboarding
 		touch();
 		sleep2();
+		textAreaoutput.setText("FTUE ended.");
 	}
 
 	public void gift_machine() {
-		touch();
-		sleep5();
-		touch();
-		sleep5();
-		touch();
-		sleep5();
-		touch();
-		sleep5();
-		touch();
-		sleep5();
-		touch();
-		sleep5();
-		touch();
-		sleep5();
+		for (int i = 0; i < 700; i++) {
+			touch();
+			sleep5();
+		}
 	}
 
 	public void unlock_level_200() {
-
+		textAreaoutput.setText("Started playing till Level 200..." + nl);
+		for (int i = 0; i < 15000; i++) {
+			touch();
+			sleep5();
+		}
+		textAreaoutput.setText("Level 200 completed." + nl);
 	}
 
-	public void smoke() {
-
+	public void stop() {
+		textAreaoutput.setText("Closing Application...");
+		sleep3();
+		System.exit(1);
 	}
 }
 
